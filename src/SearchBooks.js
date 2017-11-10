@@ -1,8 +1,32 @@
 import React, { Component } from 'react'
+import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 
 class SearchBooks extends Component {
+  state = {
+		query: '',
+    searchResults: []
+	}
+
+  updateQuery = (query) => {
+		this.setState({ query: query })
+	}
+
+  onEnterKeyPress = (query) => {
+    this.updateQuery(query)
+    BooksAPI.search(query, 20).then(searchResults => {
+
+      /**
+      /* TODO: Remove log statement after refactoring code
+      **/
+      console.log(searchResults)
+      searchResults.error ? this.setState({ searchResults: [] }): this.setState({ searchResults })
+    })
+  }
+
   render() {
+    const { query, searchResults } = this.state
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -16,12 +40,42 @@ class SearchBooks extends Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author"/>
+            <input
+              type="text"
+              placeholder="Search by title or author"
+              value={query}
+              onChange={(event) => this.updateQuery(event.target.value)}
+              onKeyPress={(event) => (event.key === 'Enter' && this.onEnterKeyPress(query.trim()))}
+            />
 
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <ol className="books-grid">
+            {searchResults.map((book) => (
+              <li key={book.id}>
+                <div className="book">
+                  <div className="book-top">
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+                    <div className="book-shelf-changer">
+                      <select defaultValue={book.shelf}>
+                        <option value="none" disabled>Move to...</option>
+                        <option value="currentlyReading">Currently Reading</option>
+                        <option value="wantToRead">Want to Read</option>
+                        <option value="read">Read</option>
+                        <option value="none">None</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="book-title">{book.title}</div>
+                  {book.authors && (book.authors.map((author, index) => (
+                    <div key={index} className="book-authors">{author}</div>
+                  )))}
+                </div>
+              </li>
+            ))}
+
+          </ol>
         </div>
       </div>
     )

@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import Book from './Book'
 
 class SearchBooks extends Component {
+  static propTypes = {
+    onBookShelfChange: PropTypes.func.isRequired
+  }
+
   state = {
 		query: '',
     searchResults: []
@@ -16,31 +21,20 @@ class SearchBooks extends Component {
   onEnterKeyPress = (query) => {
     this.updateQuery(query)
     BooksAPI.search(query, 20).then(searchResults => {
-
-      /**
-      /* TODO: Remove log statement after refactoring code
-      **/
-      console.log(searchResults)
       searchResults.error ? this.setState({ searchResults: [] }): this.setState({ searchResults })
     })
   }
 
   render() {
+    const { onBookShelfChange } = this.props
     const { query, searchResults } = this.state
 
     return (
       <div className="search-books">
+
         <div className="search-books-bar">
           <Link className="close-search" to="/">Close</Link>
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
             <input
               type="text"
               placeholder="Search by title or author"
@@ -48,20 +42,21 @@ class SearchBooks extends Component {
               onChange={(event) => this.updateQuery(event.target.value)}
               onKeyPress={(event) => (event.key === 'Enter' && this.onEnterKeyPress(query.trim()))}
             />
-
           </div>
         </div>
+
         <div className="search-books-results">
           <ol className="books-grid">
             {searchResults.map((book) => (
               <Book
                 key={book.id}
                 book={book}
+                onBookShelfChange={onBookShelfChange}
               />
             ))}
-
           </ol>
         </div>
+
       </div>
     )
   }

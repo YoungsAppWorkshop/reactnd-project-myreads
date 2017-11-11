@@ -5,14 +5,16 @@ import Book from './Book'
 
 class ListBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+		onBookShelfChange: PropTypes.func.isRequired
   }
 
   render() {
-    const { books } = this.props
+    const { books, onBookShelfChange } = this.props
 
     return (
       <div className="list-books">
+
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
@@ -27,6 +29,7 @@ class ListBooks extends Component {
                     <Book
                       key={book.id}
                       book={book}
+                      onBookShelfChange={onBookShelfChange}
                     />
                   ))}
                 </ol>
@@ -41,6 +44,7 @@ class ListBooks extends Component {
                     <Book
                       key={book.id}
                       book={book}
+                      onBookShelfChange={onBookShelfChange}
                     />
                   ))}
                 </ol>
@@ -55,16 +59,20 @@ class ListBooks extends Component {
                     <Book
                       key={book.id}
                       book={book}
+                      onBookShelfChange={onBookShelfChange}
                     />
                   ))}
                 </ol>
               </div>
             </div>
+
           </div>
         </div>
+
         <div className="open-search">
           <Link to="/search">Add a book</Link>
         </div>
+
       </div>
     )
   }

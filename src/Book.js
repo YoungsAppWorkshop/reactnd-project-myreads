@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import imageNotFound from './imgs/no_image.jpg'
 
 class Book extends Component {
   static propTypes = {
@@ -14,7 +15,14 @@ class Book extends Component {
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
+            <div
+              className="book-cover"
+              style={{
+                width: 128, height: 193,
+                backgroundImage: `url(${book.imageLinks ? book.imageLinks.thumbnail : imageNotFound})`
+              }}>
+            </div>
+
             <div className="book-shelf-changer">
               <select
                 defaultValue={book.shelf || 'none'}
@@ -27,7 +35,9 @@ class Book extends Component {
               </select>
             </div>
           </div>
+
           <div className="book-title">{book.title}</div>
+          
           {book.authors && (book.authors.map((author, index) => (
             <div key={index} className="book-authors">{author}</div>
           )))}

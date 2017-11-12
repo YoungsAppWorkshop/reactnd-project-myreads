@@ -6,6 +6,7 @@ import Book from './Book'
 
 class SearchBooks extends Component {
   static propTypes = {
+    books: PropTypes.array.isRequired,
     onBookShelfChange: PropTypes.func.isRequired
   }
 
@@ -21,7 +22,17 @@ class SearchBooks extends Component {
   onEnterKeyPress = (query) => {
     this.updateQuery(query)
     BooksAPI.search(query, 20).then(searchResults => {
-      searchResults.error ? this.setState({ searchResults: [] }): this.setState({ searchResults })
+      if (searchResults.error) {
+        this.setState({ searchResults: [] })
+      } else {
+        this.props.books.forEach((book) => {
+          let bookOnShelf = searchResults.find((result) => result.id === book.id)
+          if (bookOnShelf) {
+            bookOnShelf.shelf = book.shelf
+          }
+        })
+        this.setState({ searchResults })
+      }
     })
   }
 
@@ -34,6 +45,7 @@ class SearchBooks extends Component {
 
         <div className="search-books-bar">
           <Link className="close-search" to="/">Close</Link>
+
           <div className="search-books-input-wrapper">
             <input
               type="text"

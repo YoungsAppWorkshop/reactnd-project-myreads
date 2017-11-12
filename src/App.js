@@ -31,7 +31,6 @@ class BooksApp extends React.Component {
   }
 
   onBookShelfChange = (book, shelf) => {
-    console.log(book)
     if (this.state.books.find((prevBook) => prevBook.id === book.id)) {
       this.changeBookShelf(book, shelf)
     } else {

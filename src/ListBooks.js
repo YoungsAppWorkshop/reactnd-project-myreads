@@ -3,12 +3,19 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Book from './Book'
 
+/**
+ * Component to represent the main page for the app
+ */
 class ListBooks extends Component {
+
+  // books: list of books currently reading, want to read, or read
+  // onBookShelfChange: event handler for changing book shelf of a book
   static propTypes = {
     books: PropTypes.array.isRequired,
 		onBookShelfChange: PropTypes.func.isRequired
   }
 
+  // Render the component
   render() {
     const { books, onBookShelfChange } = this.props
 

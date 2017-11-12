@@ -2,12 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import imageNotFound from './imgs/no_image.jpg'
 
+/**
+ * Component to represent a book in the app
+ */
 class Book extends Component {
+  // book: a book instance from the books list or the search results
+  // onBookShelfChange: event handler for changing book shelf of the book
   static propTypes = {
     book: PropTypes.object.isRequired,
     onBookShelfChange: PropTypes.func.isRequired
   }
 
+  // Render the component
   render() {
     const { book, onBookShelfChange } = this.props
 
@@ -37,7 +43,7 @@ class Book extends Component {
           </div>
 
           <div className="book-title">{book.title}</div>
-          
+
           {book.authors && (book.authors.map((author, index) => (
             <div key={index} className="book-authors">{author}</div>
           )))}

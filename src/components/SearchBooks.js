@@ -48,6 +48,9 @@ class SearchBooks extends Component {
         })
         this.setState({ searchResults })
       }
+    }).catch(e => {
+      console.log(e)
+      this.setState({ searchResults: [] })
     })
   }
 

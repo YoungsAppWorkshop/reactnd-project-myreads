@@ -20,6 +20,8 @@ class BooksApp extends Component {
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
+    }).catch(e => {
+      alert('Unexpected Error occured!!\nPlease Try Again Later')
     })
   }
 
@@ -50,7 +52,9 @@ class BooksApp extends Component {
       // If the book isn't in the list, add the book in the books list
       this.addBook(book, shelf)
     }
-    BooksAPI.update(book, shelf)
+    BooksAPI.update(book, shelf).catch(e => {
+      alert('Unexpected Error occured!!\nPlease Try Again Later')
+    })
   }
 
   // Render the component

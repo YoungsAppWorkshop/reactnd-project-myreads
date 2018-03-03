@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import imageNotFound from './imgs/no_image.jpg'
+import React, { Component } from 'react'
+
+import imageNotFound from '../assets/imgs/no_image.jpg'
 
 /**
  * Component to represent a book in the app

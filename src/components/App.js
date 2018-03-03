@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
 import { Route } from 'react-router-dom'
-import SearchBooks from './SearchBooks'
+
 import ListBooks from './ListBooks'
-import './App.css'
+import SearchBooks from './SearchBooks'
+import '../styles/App.css'
+import * as BooksAPI from '../utils/api'
 
 /**
  * Main component for the My Reads app

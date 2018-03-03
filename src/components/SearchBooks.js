@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import * as BooksAPI from './BooksAPI'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
 import Book from './Book'
+import * as BooksAPI from '../utils/api'
 
 /**
  * Component to represent the search page for the app

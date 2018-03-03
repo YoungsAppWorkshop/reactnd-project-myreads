@@ -38,12 +38,15 @@ class BooksApp extends Component {
     }))
   }
 
-  // When user changes shelf of a book, change book shelf of the book
-  // or add the book in the books list
+  // Change book shelf of the book
   onBookShelfChange = (book, shelf) => {
-    if (this.state.books.find((prevBook) => prevBook.id === book.id)) {
+    const { books } = this.state
+
+    // If the book is in the list, change book shelf of the book
+    if (books.find((prevBook) => prevBook.id === book.id)) {
       this.changeBookShelf(book, shelf)
     } else {
+      // If the book isn't in the list, add the book in the books list
       this.addBook(book, shelf)
     }
     BooksAPI.update(book, shelf)
@@ -51,19 +54,26 @@ class BooksApp extends Component {
 
   // Render the component
   render() {
+    const { books } = this.state
+    // Sort Books by title in alphabetical order
+    const sortedBooks = Array.from(books).sort((book1, book2) => (
+      book1.title.toUpperCase() > book2.title.toUpperCase() ? 1 :
+      book1.title.toUpperCase() < book2.title.toUpperCase() ? -1 : 0
+    ))
+
     return (
       <div className="app">
 
         <Route exact path='/' render={() => (
           <ListBooks
-            books={this.state.books}
+            books={sortedBooks}
             onBookShelfChange={this.onBookShelfChange}
           />
         )}/>
 
         <Route path='/search' render={() => (
           <SearchBooks
-            books={this.state.books}
+            books={books}
             onBookShelfChange={this.onBookShelfChange}
           />
         )}/>

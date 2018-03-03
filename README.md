@@ -39,11 +39,11 @@ To start MyReads App:
     └── SearchBooks.js # This is the search page of the app.
 ```
 
-## Create React App
+## Attributions
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-## License
+* 404 Not Found [Image](https://pixabay.com/en/error-not-found-404-lego-mistake-2129569/) by [aitoff](https://pixabay.com/en/users/aitoff-388338/) (CC0 Creative Commons)
 
-This is a public domain work, dedicated using
-[CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
+## License
+MyReads is [MIT licensed](/LICENSE).

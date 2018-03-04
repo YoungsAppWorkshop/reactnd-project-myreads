@@ -1,3 +1,4 @@
+import { debounce } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
@@ -10,31 +11,38 @@ import * as BooksAPI from '../utils/api'
  */
 class SearchBooks extends Component {
 
-  // books: list of books currently reading, want to read, or read
-  // onBookShelfChange: event handler for changing book shelf of a book
   static propTypes = {
+    /**
+     * List of books currently reading, want to read, or read
+     */
     books: PropTypes.array.isRequired,
+    /**
+     * Event handler for changing book shelf of a book
+     */
     onBookShelfChange: PropTypes.func.isRequired
   }
 
-  // query: user input string to search books
-  // searchResults: query results from the server
   state = {
+    /**
+     * User input string to search books
+     */
 		query: '',
+    /**
+     * Search results from the server: List of books
+     */
     searchResults: []
 	}
 
   // Sync query string on user input
   updateQuery = (query) => {
-		this.setState({ query: query })
+		this.setState({ query: query }, this.searchWhenUserStoppedTyping)
 	}
 
-  // When user press enter key, fetch search results from the server
-  onEnterKeyPress = (query) => {
-    this.updateQuery(query)
+  // Fetch search results from the server
+  searchBooks = (query) => {
     // Fetch search results from the server
     BooksAPI.search(query, 20).then(searchResults => {
-      // When error occurs while fetching data, empty search results
+      // When error occurs while fetching data, clear search results
       if (searchResults.error) {
         this.setState({ searchResults: [] })
       } else {
@@ -54,6 +62,18 @@ class SearchBooks extends Component {
     })
   }
 
+  // Trigger books search when user stopped typing
+  searchWhenUserStoppedTyping = debounce(() => {
+    const { query } = this.state
+
+    if (query.trim() !== '') {
+      this.searchBooks(query.trim())
+    } else {
+      // When user clears input field, clear search results
+      this.setState({ searchResults: [] })
+    }
+  }, 500)
+
   // Render the component
   render() {
     const { onBookShelfChange } = this.props
@@ -71,7 +91,6 @@ class SearchBooks extends Component {
               placeholder="Search by title or author"
               value={query}
               onChange={(event) => this.updateQuery(event.target.value)}
-              onKeyPress={(event) => (event.key === 'Enter' && this.onEnterKeyPress(query.trim()))}
             />
           </div>
         </div>

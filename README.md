@@ -14,29 +14,17 @@ To start MyReads App:
 ## Structure of the App
 
 ```bash
-├── CONTRIBUTING.md
-├── README.md - This file.
-├── SEARCH_TERMS.md
-├── package.json
 ├── public
-│   ├── favicon.ico
-│   └── index.html
-└── src
-    ├── App.css
-    ├── App.js # This is the root of the app.
-    ├── App.test.js
-    ├── Book.js # This represents a book instance.
-    ├── BooksAPI.js
-    ├── icons
-    │   ├── add.svg
-    │   ├── arrow-back.svg
-    │   └── arrow-drop-down.svg
-    ├── imgs
-    │   └── no_image.jpg # If a book's cover image is not available, this image is used as cover.
-    ├── index.css
-    ├── index.js
-    ├── ListBooks.js # This is the main page of the app.
-    └── SearchBooks.js # This is the search page of the app.
+├──  src
+│   ├── assets
+│   ├── components
+│   │   ├── ...
+│   │   └── App.js
+│   ├── styles
+│   └── utils
+├── ...
+├── index.js
+└── README.md         # This file
 ```
 
 ## Attributions

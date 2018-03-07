@@ -3,14 +3,19 @@ import React, { Component } from 'react'
 
 import imageNotFound from '../assets/imgs/no_image.jpg'
 
+
 /**
  * Component to represent a book in the app
  */
 class Book extends Component {
-  // book: a book instance from the books list or the search results
-  // onBookShelfChange: event handler for changing book shelf of the book
   static propTypes = {
+    /**
+     * A book instance from the books list or the search results
+     */
     book: PropTypes.object.isRequired,
+    /**
+     * Event handler for changing book shelf of the book
+     */
     onBookShelfChange: PropTypes.func.isRequired
   }
 
